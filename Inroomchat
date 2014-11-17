@@ -157,7 +157,7 @@ public void OnGUI()
                         PhotonNetwork.LoadLevel(this.inputLine.Remove(0, 7));
                         FengGameManagerMKII.level = this.inputLine.Remove(0, 7);
                         GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().restartGame(false);  
-     Error‐START:   }                                                                                                                                                        
+<color=FF0000]error start                    }                                                                                                                                                        
                 }                                                                                                                                                                              
                 else if (this.inputLine.StartsWith("/kill"))                                                                       
                 {
