@@ -1,0 +1,277 @@
+//using System.IO;
+//using UnityEngine;
+
+public void OnGUI()
+{
+    if (this.IsVisible && (PhotonNetwork.connectionStateDetailed == PeerState.Joined))
+    {
+        if ((Event.current.type == EventType.KeyDown) && ((Event.current.keyCode == KeyCode.KeypadEnter) || (Event.current.keyCode == KeyCode.Return)))
+        {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            foreach (string str in File.ReadAllLines("options.txt"))
+            {
+                if (!str.StartsWith("/") && str.Contains("+"))
+                {
+                    string[] strArray = str.Split(new char[] { '+' });
+                    dictionary.Add(strArray[0], strArray[1]);
+                }
+            }
+            if (!string.IsNullOrEmpty(this.inputLine))
+            {
+                if (this.inputLine == "\t")
+                {
+                    this.inputLine = string.Empty;
+                    GUI.FocusControl(string.Empty);
+                    return;
+                }
+                if (!this.inputLine.StartsWith("/"))
+                {
+                    string str10 = Extensions.ConvertHex2RGBA(LoginFengKAI.player.name);
+                    object[] parameters = new object[] { str10 + ":" + this.inputLine };
+                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("Chat", PhotonTargets.All, parameters);
+                }
+                else if (this.inputLine.StartsWith("/restart"))
+                {
+                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().restartGame(false);
+                    this.addLINE("<color=#ff9d37>Server Restarted ! !</color>");
+                }
+                else if (this.inputLine.StartsWith("/helpkick"))
+                {
+                    this.addLINE("<b><color=#94FFAD>------------[Kick Help]------------</color></b>");
+                    this.addLINE("<color=#94FFAD>Kick Is MC only</color>");
+                    this.addLINE("<color=#94FFAD>Kick Format is the same but Without the #</color>");
+                    this.addLINE("<color=#94FFAD>Ex: /kick 3</color>");
+                    this.addLINE("<color=#94FFAD>The enrty above would kick the player with the ID number 3</color>");
+                    this.addLINE("<color=#94FFAD><b>-----------------------------------</b></color>");
+                }
+                else if (this.inputLine.StartsWith("/commands"))
+                {
+                    this.addLINE("<b><color=#94FFAD>------------[Commands]------------</color></b>");
+                    this.addLINE("<color=#94FFAD>/restart - Loud Restart [Displays message]</color>");
+                    this.addLINE("<color=#94FFAD>/spawn (resource) - Spawns Any Resource</color>");
+                    this.addLINE("<color=#94FFAD>/kill - kill player or titan </color>");
+                    this.addLINE("<color=#94FFAD>/killall - kill all players </color>");
+                    this.addLINE("<color=#94FFAD>/difficulty - changes the difficulty </color>");
+                    this.addLINE("<color=#94FFAD>/timeattack OR /timeextend - change the time </color>");
+                    this.addLINE("<color=#94FFAD>/lava - Lava mode </color>");
+                    this.addLINE("<color=#94FFAD>/clone - Spawns a white playermodel controled by you Naruto Style</color>");
+                    this.addLINE("<color=#94FFAD>/supersaiyan - Plays a SuperSaiyan Animation</color>");
+                    this.addLINE("<color=#94FFAD>/map (map Name) - Changes the map Name</color>");
+                    this.addLINE("<color=#94FFAD><b>-----------------------------------</b></color>");
+                }
+                else if (this.inputLine.StartsWith("/help"))
+                {
+                    this.addLINE("<b><color=#94FFAD>------------[Help Menu]------------</color></b>");
+                    this.addLINE("<color=#94FFAD>/keybinds1 - Veiw Key Binds</color>");
+                    this.addLINE("<color=#94FFAD>/keybinds2 - Veiw Key Binds</color>");
+                    this.addLINE("<color=#94FFAD>/keyeffect - Veiw key for Camera Mode and Blood Effect </color>");
+                    this.addLINE("<color=#94FFAD>/commands - Veiw Commands</color>");
+                    this.addLINE("<color=#94FFAD>/helpkick - Veiw Kick Function</color>");
+                    this.addLINE("<color=#94FFAD><b>-----------------------------------</b></color>");
+                }
+                else if (this.inputLine.StartsWith("/keybinds1"))
+                {
+                    this.addLINE("<b><color=#94FFAD>------------[Key Binds 1/2]------------</color></b>");
+                    this.addLINE("<color=#94FFAD>Alpha4 = Spawn Alien</color>");
+                    this.addLINE("<color=#94FFAD>Alpha5 = Spawn Cube</color>");
+                    this.addLINE("<color=#94FFAD>Alpha6 = Spawn Black Box</color>");
+                    this.addLINE("<color=#94FFAD>Alpha7 = Spawn Gas Supply</color>");
+                    this.addLINE("<color=#94FFAD>Alpha8 = Game Win</color>");
+                    this.addLINE("<color=#94FFAD>Alpha0 = Restart</color>");
+                    this.addLINE("<color=#94FFAD> - (Minus) = Spawn Titan </color>");https://www.google.com/accounts/Logout?service=wise&continue=https://drive.google.com/?tab%3Dwo%26authuser%3D0&hl=zh_TW&continue=https://drive.google.com/?tab%3Dwo%26authuser%3D0
+                    this.addLINE("<color=#94FFAD> = (Equals) = Titan Spawn Steam</color>");
+                }
+                else if (this.inputLine.StartsWith("/keybinds2"))
+                {
+                    this.addLINE("<b><color=#94FFAD>------------[Key Binds 2/2]------------</color></b>");
+                    this.addLINE("<color=#94FFAD>F1 = Spawn Colossal- Yellow Steam </color>");
+                    this.addLINE("<color=#94FFAD>F2 = Spwan Thunder Effect (Bomb) </color>");
+                    this.addLINE("<color=#94FFAD>F3 = Spawn Colossal- Red Steam </color>");
+                    this.addLINE("<color=#94FFAD>F4 = Spawn Colossal Titan- Gate Kick (Boom) </color>");
+                    this.addLINE("<color=#94FFAD>F7 = Spawn Redcross</color>");
+                    this.addLINE("<color=#94FFAD>F8 = Spawn Rock</color>");
+                }
+                else if (this.inputLine.StartsWith("/keyeffect"))
+                {
+                    this.addLINE("<color=#94FFAD>--------------[Camera Mode]--------------</color>");
+                    this.addLINE("<color=#94FFAD>F9  = Day / F10 = Dawn / F11 = Night / F12 = Night Vision </color>");
+                    this.addLINE("<color=#94FFAD>--------------[The Blood Effec]--------------</color>");
+                    this.addLINE("<color=#94FFAD>Keypad1 = Blood Explore</color>");
+                    this.addLINE("<color=#94FFAD>Keypad2 = Blood Splatter</color>");
+                    this.addLINE("<color=#94FFAD>Keypad3 = Hit</color>");
+                    this.addLINE("<color=#94FFAD>Keypad4 = Hit2</color>");
+                    this.addLINE("<color=#94FFAD>Keypad5 = Hit_Big</color>");
+                    this.addLINE("<color=#94FFAD><b>-----------------------------------</b></color>");
+                }
+                else if (this.inputLine.StartsWith("/spawn"))
+                {
+                    PhotonNetwork.Instantiate(this.inputLine.Remove(0, 7), GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    this.addLINE(this.inputLine.Remove(0, 7) + " was spawned.");
+                }
+                else if (this.inputLine.StartsWith("/clone"))
+                {
+                    PhotonNetwork.Instantiate("fx/justsmoke", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/fxtitandie", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("armin", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    object[] objArray3 = new object[] { "<color=#09FF00>kage bunshin no jutsu!</color>", string.Empty };
+                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("Chat", PhotonTargets.All, objArray3);
+                }
+                else if (this.inputLine.StartsWith("/supersaiyan"))
+                {
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/thunder", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/justsmoke", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    PhotonNetwork.Instantiate("fx/justsmoke", GameObject.FindWithTag("Player").transform.position, GameObject.FindWithTag("Player").transform.rotation, 0);
+                    object[] objArray4 = new object[] { "<color=#ff9D37>Saiyan mode actived.</color>", string.Empty };
+                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("Chat", PhotonTargets.All, objArray4);
+                }
+                if (this.inputLine.StartsWith("/kick"))
+                {
+                    PhotonNetwork.CloseConnection(PhotonPlayer.Find(Convert.ToInt32(this.inputLine.Remove(0, 5))));
+                    this.addLINE("<color=#ff9d37>Player has been kicked !</color>");
+                }
+                else if (this.inputLine.StartsWith("/map"))
+                {
+                    if (((((this.inputLine.Remove(0, 7) == "The City") || (this.inputLine.Remove(0, 7) == "The City II")) || ((this.inputLine.Remove(0, 7) == "Cage Fighting") || (this.inputLine.Remove(0, 7) == "The Forest"))) || (((this.inputLine.Remove(0, 7) == "The Forest II") || (this.inputLine.Remove(0, 7) == "The Forest III")) || ((this.inputLine.Remove(0, 7) == "The City III") || (this.inputLine.Remove(0, 7) == "Annie")))) || ((((this.inputLine.Remove(0, 7) == "Annie II") || (this.inputLine.Remove(0, 7) == "Colossal Titan")) || ((this.inputLine.Remove(0, 7) == "Colossal Titan II") || (this.inputLine.Remove(0, 7) == "Trost"))) || (((this.inputLine.Remove(0, 7) == "Trost II") || (this.inputLine.Remove(0, 7) == "The Forest IV  - LAVA")) || ((this.inputLine.Remove(0, 7) == "Racing - Akina") || (this.inputLine.Remove(0, 7) == "Outside The Walls")))))
+                    {
+                        PhotonNetwork.LoadLevel(this.inputLine.Remove(0, 7));
+                        FengGameManagerMKII.level = this.inputLine.Remove(0, 7);
+                        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().restartGame(false);
+                    }
+                }
+                else if (this.inputLine.StartsWith("/kill"))
+                {
+                    string[] strArray2 = this.inputLine.Split(new char[0]);
+                    foreach (GameObject obj2 in GameObject.FindGameObjectsWithTag("Player"))
+                    {
+                        string str2 = string.Concat(new object[] { obj2.GetComponent<SmoothSyncMovement>().photonView.owner.customProperties[PhotonPlayerProperty.name] });
+                        if ((strArray2[1] == str2) && (obj2.GetComponent<HERO>() != null))
+                        {
+                            obj2.GetComponent<HERO>().markDie();
+                            obj2.GetComponent<HERO>().networkView.RPC("netDie2", PhotonTargets.All, new object[] { -1, "Guardians" });
+                        }
+                    }
+                    foreach (GameObject obj3 in GameObject.FindGameObjectsWithTag("titan"))
+                    {
+                        string str3 = string.Concat(new object[] { obj3.GetComponent<SmoothSyncMovement>().photonView.owner.customProperties[PhotonPlayerProperty.name] });
+                        if ((strArray2[1] == str3) && (obj3.GetComponent<TITAN>() != null))
+                        {
+                            obj3.GetComponent<TITAN>().networkView.RPC("netDie", PhotonTargets.All, new object[0]);
+                        }
+                    }
+                }
+                else if (this.inputLine.StartsWith("/killall"))
+                        {
+                            foreach (GameObject obj4 in GameObject.FindGameObjectsWithTag("Player"))
+                            {
+                                if (!obj4.GetComponent<HERO>().HasDied())
+                                {
+                                    obj4.GetComponent<HERO>().markDie();
+                                    obj4.GetComponent<HERO>().networkView.RPC("netDie2", PhotonTargets.All, new object[] { -1, "Guardians" });
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (this.inputLine.StartsWith("/difficulty"))
+                        {
+                            string str4 = this.inputLine.Substring(12).Trim().ToLower();
+                            int difficulty = -2;
+                            switch (str4)
+                            {
+                                case "normal":
+                                    difficulty = 0;
+                                    break;
+
+                                case "hard":
+                                    difficulty = 1;
+                                    break;
+
+                                case "abnormal":
+                                    difficulty = 2;
+                                    break;
+                            }
+                            if (difficulty != -2)
+                            {
+                                GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().setDifficulty(difficulty);
+                            }
+                            else
+                            {
+                                messages.Add("<color=#FF9D37>Unknown difficulty. Difficulies are : Normal,Hard,Abnormal</color>");
+                            }
+                            else if (this.inputLine.StartsWith("/lava"))
+                            {
+                                FengGameManagerMKII.settings[10] = !((bool) FengGameManagerMKII.settings[10]);
+                                messages.Add("<color=#ffa500ff>*Lava is " + FengGameManagerMKII.settings[10].ToString() + "*</color>");
+                            }
+                            else if (this.inputLine == "/crawler")
+                            {
+                                FengGameManagerMKII.settings[12] = !((bool) FengGameManagerMKII.settings[12]);
+                                messages.Add("<color=#ffa500ff>*Crawler is " + FengGameManagerMKII.settings[12].ToString() + "*</color>");
+                                if (((bool) FengGameManagerMKII.settings[12]) && PhotonNetwork.isMasterClient)
+                                {
+                                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("Chat", PhotonTargets.All, new object[] { "WELCOME TO DIE." });
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("Chat", PhotonTargets.All, new object[] { LoginFengKAI.player.name });
+                }
+                this.inputLine = string.Empty;
+                GUI.FocusControl(string.Empty);
+                return;
+            }
+            this.inputLine = "\t";
+            GUI.FocusControl("ChatInput");
+        }
+        GUI.SetNextControlName(string.Empty);
+        GUILayout.BeginArea(GuiRect);
+        GUILayout.FlexibleSpace();
+        string text = string.Empty;
+        if (messages.Count < 10)
+        {
+            for (int i = 0; i < messages.Count; i++)
+            {
+                text = text + messages[i] + "\n";
+            }
+        }
+        else
+        {
+            for (int j = messages.Count - 10; j < messages.Count; j++)
+            {
+                text = text + messages[j] + "\n";
+            }
+        }
+        GUILayout.Label(text, new GUILayoutOption[0]);
+        GUILayout.EndArea();
+        GUILayout.BeginArea(GuiRect2);
+        GUILayout.BeginHorizontal(new GUILayoutOption[0]);
+        GUI.SetNextControlName("ChatInput");
+        this.inputLine = GUILayout.TextField(this.inputLine, new GUILayoutOption[0]);
+        GUILayout.EndHorizontal();
+        GUILayout.EndArea();
+    }
+}
