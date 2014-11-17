@@ -78,7 +78,7 @@ public void OnGUI()
                     this.addLINE("<color=#94FFAD>Alpha7 = Spawn Gas Supply</color>");
                     this.addLINE("<color=#94FFAD>Alpha8 = Game Win</color>");
                     this.addLINE("<color=#94FFAD>Alpha0 = Restart</color>");
-                    this.addLINE("<color=#94FFAD> - (Minus) = Spawn Titan </color>");https://www.google.com/accounts/Logout?service=wise&continue=https://drive.google.com/?tab%3Dwo%26authuser%3D0&hl=zh_TW&continue=https://drive.google.com/?tab%3Dwo%26authuser%3D0
+                    this.addLINE("<color=#94FFAD> - (Minus) = Spawn Titan </color>");
                     this.addLINE("<color=#94FFAD> = (Equals) = Titan Spawn Steam</color>");
                 }
                 else if (this.inputLine.StartsWith("/keybinds2"))
@@ -156,10 +156,10 @@ public void OnGUI()
                     {
                         PhotonNetwork.LoadLevel(this.inputLine.Remove(0, 7));
                         FengGameManagerMKII.level = this.inputLine.Remove(0, 7);
-                        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().restartGame(false);
-                    }
-                }
-                else if (this.inputLine.StartsWith("/kill"))
+                        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().restartGame(false);  
+     Error‐START:   }                                                                                                                                                        
+                }                                                                                                                                                                              
+                else if (this.inputLine.StartsWith("/kill"))                                                                       
                 {
                     string[] strArray2 = this.inputLine.Split(new char[0]);
                     foreach (GameObject obj2 in GameObject.FindGameObjectsWithTag("Player"))
@@ -234,8 +234,8 @@ public void OnGUI()
                                 }
                             }
                         }
-                    }
-                }
+                    }                                                                                                                                                                                                                 
+ Error end >.>  }
                 else
                 {
                     GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("Chat", PhotonTargets.All, new object[] { LoginFengKAI.player.name });
